@@ -1,17 +1,29 @@
 version: '3'
 services:
-  backend:
+ database:
+    image: mysql:latest
+    volumes: 
+      - "./mysql:/var/lib/mysql"
+    ports:
+      - 3306:3306
+    environment:
+     - MYSQL_ROOT_PASSWORD=pass
+phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      ports:
+            -8001:80
+      environment:
+      PMA_HOST=database
+      PMA_ARBITRARY=1
+      PMA_PORT=3306
+ws:
     build: .
+    volumes:
+     - "./php_rest_demo:/var/www/html/"
     ports:
       - 8080:80
     depends_on:
       - database
-  database:
-    image: mysql:latest
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=nome_database
-      - MYSQL_USER=username
-      - MYSQL_PASSWORD=password #da cambiare sti 4
+
+
+    
