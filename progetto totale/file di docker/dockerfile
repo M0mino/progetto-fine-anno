@@ -1,16 +1,2 @@
-# Usa un'immagine di PHP come base
-FROM php:latest 
-
-# Copia i file del server backend PHP nella directory /var/www/html del container
-COPY . /var/www/html 
-
-# Configura e installa le dipendenze necessarie
-RUN apt-get update \
-    && apt-get install -y libmysqli-dev \
-    && docker-php-ext-install mysqli 
-
-# Esponi la porta 80 per il traffico HTTP
-EXPOSE 80 
-
-# Avvia il server Apache al lancio del container
-CMD ["apache2-foreground"]
+FROM php:7.2-apache
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
