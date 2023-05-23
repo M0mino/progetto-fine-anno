@@ -1,17 +1,17 @@
-version: "2.2"
+version: '3'
 services:
-  web_server:
-    build: .
-    ports:
-      - 8080:80
-      - 4430:443
-    volumes:
-      - ./php:/var/www/html
-  database:
-    image: mysql:5.7
-    ports:
-      - 3306:3306
-    volumes:
-      - ./mysql:/var/lib/mysql
-    environment: 
-      - MYSQL_ROOT_PASSWORD=**
+  backend:
+    build: .
+    ports:
+      - 8080:80
+    depends_on:
+      - database
+  database:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=nome_database
+      - MYSQL_USER=username
+      - MYSQL_PASSWORD=password #da cambiare sti 4
